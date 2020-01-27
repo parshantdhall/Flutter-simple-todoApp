@@ -7,13 +7,12 @@ class Grettings extends StatefulWidget {
 
 class _GrettingsState extends State<Grettings> {
   String time;
-  int currentTime;
+  int currentTime = DateTime.now().hour;
 
   String getTimeGrettings() {
-    var tm = DateTime.now().hour;
-    if (tm < 12) {
+    if (currentTime < 12) {
       return 'Good Morning';
-    } else if (tm > 12 && tm < 5) {
+    } else if (currentTime > 12 && currentTime < 5) {
       return 'Good Afternoon';
     } else {
       return 'Good Evening';
@@ -24,18 +23,16 @@ class _GrettingsState extends State<Grettings> {
   void initState() {
     super.initState();
     time = getTimeGrettings();
-    currentTime = DateTime.now().hour;
   }
 
   @override
   Widget build(BuildContext context) {
     if (DateTime.now().hour != currentTime) {
       setState(() {
-        time = getTimeGrettings();
         currentTime = DateTime.now().hour;
+        time = getTimeGrettings();
       });
     }
-    print('State is set automatically');
     return Container(
       // decoration: BoxDecoration(
       //   border: Border.all(width: 1, color: Colors.black),

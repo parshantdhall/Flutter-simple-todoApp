@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // Widgets
 import './widgets/new_todo.dart';
 import './widgets/grettings.dart';
+import './widgets/new_todo_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,12 +30,14 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       // backgroundColor: Colors.green,
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            // Top Heading
-            Grettings(),
-            NewTodo(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Grettings(),
+              NewTodo(),
+              NewTodoList(),
+            ],
+          ),
         ),
       ),
     );
