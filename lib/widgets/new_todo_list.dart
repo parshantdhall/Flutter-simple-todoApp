@@ -1,33 +1,53 @@
 import 'package:flutter/material.dart';
+import './todo.dart';
+import '../models/todoData.dart';
 
-class NewTodoList extends StatefulWidget {
-  @override
-  _NewTodoListState createState() => _NewTodoListState();
-}
+class NewTodoList extends StatelessWidget {
+  final List<TodoData> data;
 
-class _NewTodoListState extends State<NewTodoList> {
+  NewTodoList(this.data);
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.all(5),
       padding: EdgeInsets.symmetric(vertical: 10.0),
-      // decoration:
-      //     BoxDecoration(border: Border.all(width: 2, color: Colors.black)),
       child: Stack(
+        overflow: Overflow.visible,
         children: <Widget>[
           Card(
             elevation: 5,
             child: Container(
-              height: 100,
+              height: 280,
+              // decoration: BoxDecoration(
+              //     border: Border.all(color: Colors.black, width: 2)),
+              margin: EdgeInsets.only(top: 35),
               width: double.infinity,
-              color: Colors.white,
+              // color: Colors.white,
+              child: data.length > 0
+                  ? ListView.builder(
+                      itemBuilder: (_, i) {
+                        return Todo(
+                          tData: data[i],
+                        );
+                      },
+                      itemCount: data.length,
+                      reverse: true,
+                    )
+                  : Center(
+                      child: Text(
+                        'Please add the todo',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                    ),
             ),
           ),
-          Align(
-            alignment: Alignment(-.6, -.1),
+          // The Todo heading container
+          Positioned(
+            left: 15,
+            top: -15,
             child: Container(
-              width: 100,
+              width: 90,
               height: 46,
               alignment: Alignment.center,
               decoration: BoxDecoration(
@@ -36,10 +56,7 @@ class _NewTodoListState extends State<NewTodoList> {
               ),
               child: Text(
                 "Todos",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
+                style: Theme.of(context).textTheme.title,
               ),
             ),
           )
