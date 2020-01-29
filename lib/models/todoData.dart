@@ -5,6 +5,8 @@ import 'dart:math';
 class TodoData {
   final String text;
   final String id = Uuid().v1();
+  final DateTime createdDate = DateTime.now();
+  DateTime doneDate;
   bool isdone = false;
   Color tColor;
   TodoData({@required this.text}) {
@@ -19,5 +21,9 @@ class TodoData {
   }
   set done(bool dn) {
     isdone = dn;
+  }
+
+  set dDate(DateTime tm) {
+    doneDate = tm;
   }
 }

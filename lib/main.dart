@@ -49,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
     TodoData doneTodo = data.firstWhere((item) => item.id == id);
     setState(() {
       doneTodo.done = !doneTodo.isdone;
+      doneTodo.doneDate = DateTime.now();
     });
   }
 

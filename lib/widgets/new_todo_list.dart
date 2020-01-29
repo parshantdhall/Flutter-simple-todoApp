@@ -73,7 +73,7 @@ class _NewTodoListState extends State<NewTodoList> {
               height: 46,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: switchCondition ? Colors.indigo[300] : Colors.red[400],
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               child: Text(

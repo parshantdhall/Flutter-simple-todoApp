@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../models/todoData.dart';
 
 class Todo extends StatelessWidget {
@@ -47,11 +48,24 @@ class Todo extends StatelessWidget {
               tData.text,
               style: tData.isdone
                   ? Theme.of(context).textTheme.title.copyWith(
-                        decoration: TextDecoration.lineThrough,
-                      )
+                      decoration: TextDecoration.lineThrough,
+                      color: Colors.grey)
                   : Theme.of(context).textTheme.title,
             ),
             onLongPress: () => onDone(tData.id),
+            subtitle: tData.isdone
+                ? Text(
+                    'Done at ${DateFormat.MMMEd().format(tData.doneDate)} - ${DateFormat.jm().format(tData.doneDate)}',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  )
+                : Text(
+                    'Created at ${DateFormat.MMMEd().format(tData.createdDate)} - ${DateFormat.jm().format(tData.createdDate)}',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
           ),
         ),
       ),
