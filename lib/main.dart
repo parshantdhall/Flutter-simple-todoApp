@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 // Widgets
 import './widgets/new_todo.dart';
 import './widgets/grettings.dart';
@@ -20,6 +19,7 @@ class MyApp extends StatelessWidget {
         textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle(
                 fontSize: 18,
+                color: Color.fromRGBO(28, 35, 33, 1),
               ),
             ),
       ),
@@ -37,13 +37,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<TodoData> data = [
-    // TodoData(
-    //     text:
-    //         'Hello this is the Second todo scasdcadcsac dg dsusd dc sduchh dc sdcsdcy dcid sd sdi sdvid sd viudv sdiuv sduid vuid vsdiuv '),
-    // TodoData(text: 'Hello this is the Second todo'),
-    // TodoData(text: 'Hello this is the Second todo'),
-  ];
+  List<TodoData> data = [];
 
   void addTodo(String todoTxt) {
     setState(() {
@@ -51,17 +45,24 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void addDoneTodo(String id) {
+    TodoData doneTodo = data.firstWhere((item) => item.id == id);
+    setState(() {
+      doneTodo.done = !doneTodo.isdone;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.green,
+      backgroundColor: Color.fromRGBO(247, 247, 255, 1),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               Grettings(),
               NewTodo(addTodo),
-              NewTodoList(data),
+              NewTodoList(data.reversed.toList(), addDoneTodo),
             ],
           ),
         ),

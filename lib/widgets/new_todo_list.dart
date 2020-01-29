@@ -4,35 +4,36 @@ import '../models/todoData.dart';
 
 class NewTodoList extends StatelessWidget {
   final List<TodoData> data;
+  final Function onDone;
 
-  NewTodoList(this.data);
+  NewTodoList(this.data, this.onDone);
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.all(5),
-      padding: EdgeInsets.symmetric(vertical: 10.0),
+      padding: EdgeInsets.symmetric(vertical: 5.0),
       child: Stack(
         overflow: Overflow.visible,
         children: <Widget>[
           Card(
             elevation: 5,
             child: Container(
-              height: 280,
-              // decoration: BoxDecoration(
-              //     border: Border.all(color: Colors.black, width: 2)),
-              margin: EdgeInsets.only(top: 35),
+              height: MediaQuery.of(context).size.height * .62,
+              margin: EdgeInsets.only(top: 40),
               width: double.infinity,
-              // color: Colors.white,
               child: data.length > 0
                   ? ListView.builder(
                       itemBuilder: (_, i) {
-                        return Todo(
-                          tData: data[i],
-                        );
+                        return !data[i].isdone
+                            ? Todo(
+                                key: ValueKey(data[i].id),
+                                tData: data[i],
+                                onDone: onDone,
+                              )
+                            : null;
                       },
                       itemCount: data.length,
-                      reverse: true,
                     )
                   : Center(
                       child: Text(
@@ -56,8 +57,21 @@ class NewTodoList extends StatelessWidget {
               ),
               child: Text(
                 "Todos",
-                style: Theme.of(context).textTheme.title,
+                style: Theme.of(context).textTheme.title.copyWith(
+                      color: Colors.white,
+                    ),
               ),
+            ),
+          ),
+          // Switch For Done todo
+          Positioned(
+            right: 5,
+            child: Switch(
+              value: false,
+              activeColor: Colors.red,
+              onChanged: (bl) {
+                print(bl);
+              },
             ),
           )
         ],

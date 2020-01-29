@@ -10,7 +10,6 @@ class _GrettingsState extends State<Grettings> {
   int currentTime = DateTime.now().hour;
 
   String getTimeGrettings() {
-    print(currentTime);
     if (currentTime < 12) {
       return 'Good Morning';
     } else if (currentTime > 12 && currentTime < 17) {
