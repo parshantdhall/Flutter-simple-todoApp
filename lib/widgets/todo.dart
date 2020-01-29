@@ -19,6 +19,10 @@ class Todo extends StatelessWidget {
       key: Key(tData.id),
       onDismissed: (_) {
         onRemove(tData.id);
+        // Showing snackbar
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text("Todo Deleted Successfully"),
+        ));
       },
       direction: DismissDirection.endToStart,
       background: Container(
@@ -52,7 +56,12 @@ class Todo extends StatelessWidget {
                       color: Colors.grey)
                   : Theme.of(context).textTheme.title,
             ),
-            onLongPress: () => onDone(tData.id),
+            onLongPress: () {
+              onDone(tData.id); // Showing snackbar
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: tData.isdone ? Text('Todo Done') : Text('Todo Undone'),
+              ));
+            },
             subtitle: tData.isdone
                 ? Text(
                     'Done at ${DateFormat.MMMEd().format(tData.doneDate)} - ${DateFormat.jm().format(tData.doneDate)}',
