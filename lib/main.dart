@@ -52,6 +52,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void removeData(String id) {
+    setState(() {
+      data.removeWhere((item) => item.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Grettings(),
               NewTodo(addTodo),
-              NewTodoList(data.reversed.toList(), addDoneTodo),
+              NewTodoList(
+                data: data.reversed.toList(),
+                onDone: addDoneTodo,
+                onRemove: removeData,
+              ),
             ],
           ),
         ),

@@ -9,11 +9,11 @@ class TodoData {
   Color tColor;
   TodoData({@required this.text}) {
     List<Color> colors = [
-      Color.fromRGBO(247, 247, 255, 1),
       Color.fromRGBO(255, 217, 206, 1),
       Color.fromRGBO(189, 213, 234, 1),
       Color.fromRGBO(219, 84, 97, 1),
       Color.fromRGBO(89, 60, 143, 1),
+      Color.fromRGBO(123, 224, 173, 1),
     ];
     this.tColor = colors[Random().nextInt(colors.length)];
   }

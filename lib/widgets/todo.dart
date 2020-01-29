@@ -4,14 +4,20 @@ import '../models/todoData.dart';
 class Todo extends StatelessWidget {
   final TodoData tData;
   final Function onDone;
-  Todo({Key key, @required this.tData, @required this.onDone})
-      : super(key: key);
+  final Function onRemove;
+
+  Todo({
+    Key key,
+    @required this.tData,
+    @required this.onDone,
+    @required this.onRemove,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Dismissible(
       key: Key(tData.id),
       onDismissed: (_) {
-        print('Deleted');
+        onRemove(tData.id);
       },
       direction: DismissDirection.endToStart,
       background: Container(
@@ -25,14 +31,28 @@ class Todo extends StatelessWidget {
         ),
       ),
       child: Card(
-        color: tData.tColor,
+        // color: tData.tColor,
         elevation: 3,
-        child: ListTile(
-          title: Text(
-            tData.text,
-            style: Theme.of(context).textTheme.title,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              left: BorderSide(
+                color: tData.tColor,
+                width: 4,
+              ),
+            ),
           ),
-          onLongPress: () => onDone(tData.id),
+          child: ListTile(
+            title: Text(
+              tData.text,
+              style: tData.isdone
+                  ? Theme.of(context).textTheme.title.copyWith(
+                        decoration: TextDecoration.lineThrough,
+                      )
+                  : Theme.of(context).textTheme.title,
+            ),
+            onLongPress: () => onDone(tData.id),
+          ),
         ),
       ),
     );

@@ -2,45 +2,66 @@ import 'package:flutter/material.dart';
 import './todo.dart';
 import '../models/todoData.dart';
 
-class NewTodoList extends StatelessWidget {
+class NewTodoList extends StatefulWidget {
   final List<TodoData> data;
   final Function onDone;
+  final Function onRemove;
 
-  NewTodoList(this.data, this.onDone);
+  NewTodoList(
+      {@required this.data, @required this.onDone, @required this.onRemove});
+
+  @override
+  _NewTodoListState createState() => _NewTodoListState();
+}
+
+class _NewTodoListState extends State<NewTodoList> {
+  bool switchCondition = false;
+
+  Widget listOfTodos(List<TodoData> dt) {
+    if (dt.length > 0) {
+      return ListView.builder(
+        itemBuilder: (_, i) {
+          return Todo(
+            key: ValueKey(dt[i].id),
+            tData: dt[i],
+            onDone: widget.onDone,
+            onRemove: widget.onRemove,
+          );
+        },
+        itemCount: dt.length,
+      );
+    } else {
+      return Center(
+        child: Text(
+          'Please add the todo',
+          style: Theme.of(context).textTheme.title,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<TodoData> notDoneData =
+        widget.data.where((item) => item.isdone == false).toList();
+    List<TodoData> doneData =
+        widget.data.where((item) => item.isdone == true).toList();
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.all(5),
-      padding: EdgeInsets.symmetric(vertical: 5.0),
+      margin: EdgeInsets.only(top: 20, bottom: 5, left: 5, right: 5),
+      padding: EdgeInsets.only(top: 5.0),
       child: Stack(
         overflow: Overflow.visible,
         children: <Widget>[
           Card(
             elevation: 5,
             child: Container(
-              height: MediaQuery.of(context).size.height * .62,
+              height: MediaQuery.of(context).size.height * .63,
               margin: EdgeInsets.only(top: 40),
               width: double.infinity,
-              child: data.length > 0
-                  ? ListView.builder(
-                      itemBuilder: (_, i) {
-                        return !data[i].isdone
-                            ? Todo(
-                                key: ValueKey(data[i].id),
-                                tData: data[i],
-                                onDone: onDone,
-                              )
-                            : null;
-                      },
-                      itemCount: data.length,
-                    )
-                  : Center(
-                      child: Text(
-                        'Please add the todo',
-                        style: Theme.of(context).textTheme.title,
-                      ),
-                    ),
+              child: switchCondition
+                  ? listOfTodos(doneData)
+                  : listOfTodos(notDoneData),
             ),
           ),
           // The Todo heading container
@@ -56,7 +77,7 @@ class NewTodoList extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               child: Text(
-                "Todos",
+                switchCondition ? 'Done' : 'Todos',
                 style: Theme.of(context).textTheme.title.copyWith(
                       color: Colors.white,
                     ),
@@ -67,10 +88,12 @@ class NewTodoList extends StatelessWidget {
           Positioned(
             right: 5,
             child: Switch(
-              value: false,
+              value: switchCondition,
               activeColor: Colors.red,
               onChanged: (bl) {
-                print(bl);
+                setState(() {
+                  switchCondition = bl;
+                });
               },
             ),
           )

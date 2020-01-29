@@ -19,26 +19,19 @@ class _NewTodoState extends State<NewTodo> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.symmetric(vertical: 8),
-        padding: EdgeInsets.all(8),
-        child: Container(
-          padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom + 10),
-          child: Card(
-            child: TextField(
-              controller: _inputField,
-              decoration: InputDecoration(
-                hintText: 'Enter your new Todo',
-                icon: Icon(
-                  Icons.add,
-                  color: Colors.red,
-                ),
-                border: InputBorder.none,
-              ),
-              onSubmitted: (_) => onSubmit(),
-            ),
+    return Card(
+      child: TextField(
+        controller: _inputField,
+        decoration: InputDecoration(
+          hintText: 'Enter your new Todo',
+          icon: Icon(
+            Icons.add,
+            color: Colors.red,
           ),
-        ));
+          border: InputBorder.none,
+        ),
+        onSubmitted: (_) => onSubmit(),
+      ),
+    );
   }
 }

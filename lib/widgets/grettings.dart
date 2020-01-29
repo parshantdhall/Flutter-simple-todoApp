@@ -10,9 +10,9 @@ class _GrettingsState extends State<Grettings> {
   int currentTime = DateTime.now().hour;
 
   String getTimeGrettings() {
-    if (currentTime < 12) {
+    if (currentTime >= 1 && currentTime < 12) {
       return 'Good Morning';
-    } else if (currentTime > 12 && currentTime < 17) {
+    } else if (currentTime >= 12 && currentTime < 17) {
       return 'Good Afternoon';
     } else {
       return 'Good Evening';
@@ -34,15 +34,18 @@ class _GrettingsState extends State<Grettings> {
       });
     }
     return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(vertical: 8),
+      width: MediaQuery.of(context).size.width * .6,
+      margin: EdgeInsets.only(
+          top: 8, bottom: 8, right: MediaQuery.of(context).size.width * .4),
       padding: EdgeInsets.all(8),
-      child: Text(
-        time,
-        style: TextStyle(
-          fontWeight: FontWeight.w700,
-          fontFamily: 'DancingScript',
-          fontSize: 40,
+      child: FittedBox(
+        child: Text(
+          time,
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontFamily: 'DancingScript',
+            fontSize: 40,
+          ),
         ),
       ),
     );
